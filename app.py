@@ -13,8 +13,11 @@ faucet_password = "Mgnieto26-"
 # Crear la aplicación Flask
 app = Flask(__name__)
 
+@app.route('/')
+def index():
+    return render_template('index.html')
 # Ruta para solicitar fondos
-@app.route('/', methods=['POST'])
+@app.route('/request', methods=['POST'])
 def request_funds():
     # Obtener la dirección de la cuenta a la que se enviarán los fondos desde los datos de solicitud
     data = request.get_json()
