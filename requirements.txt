@@ -1,4 +1,4 @@
-coinbase
+web3
 Flask
 Gunicorn
-redis
+
