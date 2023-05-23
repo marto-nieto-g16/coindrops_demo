@@ -16,6 +16,15 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/sponsorship')
+def sponsorship():
+    return render_template('sponsorship.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+    
 # Ruta para solicitar fondos
 @app.route('/request', methods=['POST'])
 def request_funds():
