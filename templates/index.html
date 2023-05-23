@@ -15,12 +15,50 @@
             </ul>
         </nav>
     </header>
-    <h1>Faucet de Prueba</h1>
-    <p>Esta es una faucet de prueba para recibir Ethereum (ETH) en la red de Goerli.</p>
-    <p>Ingrese su dirección de Ethereum y haga clic en "Solicitar fondos" para recibir ETH de la Faucet:</p>
-    <input type="text" id="address-input" placeholder="Dirección Ethereum">
-    <button onclick="requestFunds()">Solicitar fondos</button>
+    <div class="container">
+        <h1>Faucet de Prueba</h1>
+        <p>Esta es una faucet de prueba para recibir Ethereum (ETH) en la red de Goerli.</p>
+        <form onsubmit="event.preventDefault(); requestFunds();">
+            <p>Ingrese su dirección de Ethereum y haga clic en "Solicitar fondos" para recibir ETH de la Faucet:</p>
+            <input type="text" id="address-input" placeholder="Dirección Ethereum">
+            <button type="submit">Solicitar fondos</button>
+        </form>
+    </div>
+    <footer>
+        <p>&copy; 2023 Faucet CoinDrops. Todos los derechos reservados.</p>
+    </footer>
 
+    <script>
+        function requestFunds() {
+            var addressInput = document.getElementById('address-input');
+            var address = addressInput.value;
+
+            fetch('/request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ address: address })
+            })
+            .then(function(response) {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Error al solicitar fondos: ' + response.statusText);
+                }
+            })
+            .then(function(data) {
+                alert(data);
+            })
+            .catch(function(error) {
+                alert(error);
+            });
+        }
+    </script>
+
+    <footer>
+        <p>&copy; 2023 Faucet CoinDrops. Todos los derechos reservados.</p>
+    </footer>
     <script>
         function requestFunds() {
             var addressInput = document.getElementById('address-input');
