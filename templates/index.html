@@ -18,7 +18,7 @@
     <div class="container">
         <h1>Bienvenido a CoinDrops</h1>
         <p>Esta es una faucet de prueba para recibir Ethereum (ETH) en la red de Goerli.</p>
-        <form action="/request" method="POST">
+        <form action="/claim" method="POST">
             <p>Ingrese su dirección de Ethereum y haga clic en "Solicitar fondos" para recibir ETH de la Faucet:</p>
             <input type="text" id="address-input" placeholder="Dirección Ethereum">
             <button type="submit">Solicitar fondos</button>
@@ -36,7 +36,7 @@
             var address = document.getElementById('address-input').value;
 
             // Realizar la solicitud AJAX al servidor
-            axios.post('/request', { address: address })
+            axios.post('/claim', { address: address })
                 .then(function(response) {
                     // Si la solicitud es exitosa, muestra un mensaje de éxito
                     var messageElement = document.getElementById('message');
@@ -57,7 +57,7 @@
             var addressInput = document.getElementById('address-input');
             var address = addressInput.value;
 
-            fetch('/request', {
+            fetch('/claim', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
