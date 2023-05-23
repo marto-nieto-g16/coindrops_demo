@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Faucet</title>
+</head>
+<body>
+    <h1>Binance Faucet</h1>
+    <form id="faucetForm">
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address"><br><br>
+        
+        <label for="amount">Amount:</label>
+        <input type="text" id="amount" name="amount"><br><br>
+        
+        <label for="asset">Asset:</label>
+        <select id="asset" name="asset">
+            <option value="SHIB">SHIBA INU (SHIB)</option>
+            <!-- Añade más opciones de activos aquí si lo deseas -->
+        </select><br><br>
+        
+        <input type="submit" value="Claim">
+    </form>
+    
+    <div id="response"></div>
+    
+    <script>
+        document.getElementById('faucetForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var form = e.target;
+            var data = new FormData(form);
+            
+            fetch('/faucet', {
+                method: 'POST',
+                body: data
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById('response').innerText = JSON.stringify(result);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>

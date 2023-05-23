@@ -1,0 +1,9 @@
+services:
+  - name: faucet
+    env:
+      - key: API_KEY
+        from_secret: api-key
+      - key: API_SECRET
+        from_secret: api-secret
+    build_command: 'python -m venv coindrops_demo && source coindrops_demo/bin/activate && pip install -r requirements.txt'
+    start_command: 'source coindrops_demo/bin/activate && gunicorn app:app -b :$PORT'
