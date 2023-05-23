@@ -24,58 +24,27 @@
             <button type="submit">Solicitar fondos</button>
         </form>
     </div>
-    <div id="message"></div>
+   
     <footer>
         <p>&copy; 2023 Faucet CoinDrops. Todos los derechos reservados.</p>
     </footer>
 
-        <script>
-        document.getElementById('claim-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            var address = document.getElementById('address-input').value;
-
-            // Realizar la solicitud AJAX al servidor
-            axios.post('/claim', { address: address })
-                .then(function(response) {
-                    // Si la solicitud es exitosa, muestra un mensaje de éxito
-                    var messageElement = document.getElementById('message');
-                    messageElement.textContent = response.data.message;
-                    messageElement.style.color = 'green';
-                })
-                .catch(function(error) {
-                    // Si la solicitud falla, muestra un mensaje de error
-                    var messageElement = document.getElementById('message');
-                    messageElement.textContent = 'Error al reclamar la criptomoneda.';
-                    messageElement.style.color = 'red';
-                });
-        });
-    </script>
-
-    <script>
+            <script>
         function requestFunds() {
-            var addressInput = document.getElementById('address-input');
-            var address = addressInput.value;
+            var addressInput = $('#address-input');
+            var address = addressInput.val();
 
-            fetch('/claim', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
+            $.ajax({
+                url: '/request',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ address: address }),
+                success: function(data) {
+                    alert(data);
                 },
-                body: JSON.stringify({ address: address })
-            })
-            .then(function(response) {
-                if (response.ok) {
-                    return response.text();
-                } else {
-                    throw new Error('Error al solicitar fondos: ' + response.statusText);
+                error: function(error) {
+                    alert('Error al solicitar fondos: ' + error.statusText);
                 }
-            })
-            .then(function(data) {
-                alert(data);
-            })
-            .catch(function(error) {
-                alert(error);
             });
         }
     </script>
