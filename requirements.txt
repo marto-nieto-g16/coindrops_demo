@@ -1,3 +1,4 @@
 coinbase
 Flask
 Gunicorn
+redis
