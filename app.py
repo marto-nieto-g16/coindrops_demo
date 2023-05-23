@@ -2,7 +2,7 @@ from flask import Flask, request
 from web3 import Web3
 
 app = Flask(__name__)
-web3 = Web3(Web3.HTTPProvider('https://goerli.infura.io/v3/a4693816802c4b01bedef15ad5a2fd92'))
+web3 = Web3(Web3.HTTPProvider('https://mainnet.infura.io/v3/a4693816802c4b01bedef15ad5a2fd92'))
 private_key = 'a4693816802c4b01bedef15ad5a2fd92'
 address = '0xdbD9cFe329Fcb90529579Fe25282089464616CD0'
 
