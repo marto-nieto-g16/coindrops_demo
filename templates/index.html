@@ -18,7 +18,7 @@
     <div class="container">
         <h1>Bienvenido a CoinDrops</h1>
         <p>Esta es una faucet de prueba para recibir Ethereum (ETH) en la red de Goerli.</p>
-        <form action="/claim" method="POST">
+        <onsubmit="event.preventDefault(); requestFunds();>
             <p>Ingrese su dirección de Ethereum y haga clic en "Solicitar fondos" para recibir ETH de la Faucet:</p>
             <input type="text" id="address-input" placeholder="Dirección Ethereum">
             <button type="submit">Solicitar fondos</button>
