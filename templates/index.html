@@ -34,7 +34,7 @@
             var address = addressInput.val();
 
             $.ajax({
-                url: '/claim',
+                url: '/request',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({ address: address }),
