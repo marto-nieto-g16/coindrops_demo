@@ -55,33 +55,5 @@
             });
         }
     </script>
-
-    <script>
-        function requestFunds() {
-            var addressInput = document.getElementById('address-input');
-            var address = addressInput.value;
-
-            fetch('/request', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ address: address })
-            })
-            .then(function(response) {
-                if (response.ok) {
-                    return response.text();
-                } else {
-                    throw new Error('Error al solicitar fondos: ' + response.statusText);
-                }
-            })
-            .then(function(data) {
-                alert(data);
-            })
-            .catch(function(error) {
-                alert(error);
-            });
-        }
-    </script>
 </body>
 </html>
