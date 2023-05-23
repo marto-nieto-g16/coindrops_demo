@@ -49,7 +49,7 @@ def request_funds():
             w3.personal.unlockAccount(faucet_address, faucet_password)
 
         # Firmar y enviar la transacción
-        signed_txn = w3.eth.account.signTransaction(transaction, private_key="YourPrivateKey")
+        signed_txn = w3.eth.account.signTransaction(transaction, private_key="a4693816802c4b01bedef15ad5a2fd92")
         tx_hash = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
 
         return f"Transacción enviada: {tx_hash.hex()}", 200
