@@ -26,8 +26,8 @@ def about():
     return render_template('about.html')
     
 # Ruta para solicitar fondos
-@app.route('/request', methods=['POST'])
-def request_funds():
+@app.route('/claim', methods=['POST'])
+def claim():
     # Obtener la dirección de la cuenta a la que se enviarán los fondos desde los datos de solicitud
     data = request.get_json()
     recipient_address = data.get('address')
