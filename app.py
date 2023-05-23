@@ -39,7 +39,7 @@ def request_funds():
         transaction = {
             'from': faucet_address,
             'to': recipient_address,
-            'value': w3.toWei(0.001, 'ether'),  # Monto de envío (0.1 ETH en este ejemplo)
+            'value': w3.toWei(0.01, 'ether'),  # Monto de envío (0.1 ETH en este ejemplo)
             'gas': 21000,  # Estimación básica de gas para una transferencia
             'gasPrice': w3.toWei('5', 'gwei'),  # Precio del gas (5 gwei en este ejemplo)
         }
