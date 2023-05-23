@@ -1,5 +1,5 @@
 from web3 import Web3, HTTPProvider
-from flask import Flask, request
+from flask import Flask, render_template, request, jsonify
 
 # Configurar la conexión a la red Goerli
 w3 = Web3(HTTPProvider('https://goerli.infura.io/v3/a4693816802c4b01bedef15ad5a2fd92'))
