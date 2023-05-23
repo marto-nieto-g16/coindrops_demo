@@ -28,14 +28,13 @@
     <footer>
         <p>&copy; 2023 Faucet CoinDrops. Todos los derechos reservados.</p>
     </footer>
-
-            <script>
+    <script>
         function requestFunds() {
             var addressInput = $('#address-input');
             var address = addressInput.val();
 
             $.ajax({
-                url: '/request',
+                url: '/claim',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({ address: address }),
