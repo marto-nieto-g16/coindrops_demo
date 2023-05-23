@@ -18,15 +18,39 @@
     <div class="container">
         <h1>Bienvenido a CoinDrops</h1>
         <p>Esta es una faucet de prueba para recibir Ethereum (ETH) en la red de Goerli.</p>
-        <form onsubmit="event.preventDefault(); requestFunds();">
+        <form action="/request" method="POST">
             <p>Ingrese su dirección de Ethereum y haga clic en "Solicitar fondos" para recibir ETH de la Faucet:</p>
             <input type="text" id="address-input" placeholder="Dirección Ethereum">
             <button type="submit">Solicitar fondos</button>
         </form>
     </div>
+    <div id="message"></div>
     <footer>
         <p>&copy; 2023 Faucet CoinDrops. Todos los derechos reservados.</p>
     </footer>
+
+        <script>
+        document.getElementById('claim-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var address = document.getElementById('address-input').value;
+
+            // Realizar la solicitud AJAX al servidor
+            axios.post('/request', { address: address })
+                .then(function(response) {
+                    // Si la solicitud es exitosa, muestra un mensaje de éxito
+                    var messageElement = document.getElementById('message');
+                    messageElement.textContent = response.data.message;
+                    messageElement.style.color = 'green';
+                })
+                .catch(function(error) {
+                    // Si la solicitud falla, muestra un mensaje de error
+                    var messageElement = document.getElementById('message');
+                    messageElement.textContent = 'Error al reclamar la criptomoneda.';
+                    messageElement.style.color = 'red';
+                });
+        });
+    </script>
 
     <script>
         function requestFunds() {
