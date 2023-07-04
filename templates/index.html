@@ -1,50 +1,18 @@
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>CoinDrops</title>
-        <link rel="stylesheet" href="static/styles.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    </head>
-    <body>
-        <header>
-            <nav>
-                <ul>
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="/about">Acerca del Ptoyecto</a></li>
-                    <li><a href="/sponsorship">Patrocinio</a></li>
-                </ul>
-            </nav>
-        </header>
-        <div class="container">
-            <h1>Bienvenido a CoinDrops</h1>
-            <p>Esta es una faucet de prueba para recibir Ethereum (ETH) en la red de Goerli.</p>
-        <form onsubmit="event.preventDefault(); requestFunds();">
-            <p>Ingrese su dirección de Ethereum y haga clic en "Solicitar fondos" para recibir ETH de la Faucet:</p>
-            <input type="text" id="address-input" placeholder="Dirección Ethereum">
-            <button type="submit">Solicitar fondos</button>
-        </form>
-        <footer>
-            <p>&copy; 2023 Faucet CoinDrops. Todos los derechos reservados.</p>
-        </footer>
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contador en Flask</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function decrementarContador() {
+            $.get("/decrementar");
+        }
 
-                <script>
-            function requestFunds() {
-                var addressInput = $('address-input');
-                var address = addressInput.val();
-
-                $.ajax({
-                    url: '/request',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({ address: address }),
-                    success: function(data) {
-                        alert(data);
-                    },
-                    error: function(error) {
-                        alert('Error al solicitar fondos: ' + error.statusText);
-                    }
-                });
-            }
-        </script>
-    </body>
-    </html>
+        setInterval(decrementarContador, 1000);
+    </script>
+</head>
+<body>
+    <h1>Contador actual: {{ contador }}</h1>
+</body>
+</html>
