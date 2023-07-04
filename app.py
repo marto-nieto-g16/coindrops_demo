@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.secret_key = b'\xfc^\xa0\x97\xef\x91%\x96\xf4c!j\x15\x84Dh\x0f\xfee\xe0s()\x8a'
 
 # Configuración de Redis
-redis_db = redis.from_url("redis://red-cihqq559aq012evkgnkg:6379")
+redis_db = redis.from_url("rediss://red-cihqq559aq012evkgnkg:FpJ21InSqDhgJn5B3UPc0HBfp6zoggtj@oregon-redis.render.com:6379")
 
 # Configuración de Flask-Login
 login_manager = LoginManager()
