@@ -2,50 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Contador en Flask</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        function decrementarContador() {
-            $.get("/decrementar");
-        }
-
-        setInterval(decrementarContador, 1000);
-    </script>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-        }
-
-        .contador {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .contador h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-
-        .contador button {
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-    </style>
+    <title>Plataforma de Tokens</title>
 </head>
 <body>
-    <div class="contador">
-        <h1>Contador actual: {{ contador }}</h1>
-        <button onclick="decrementarContador()">Decrementar contador</button>
-    </div>
+    <h1>Bienvenido(a), {{ username }}</h1>
+    <p>Tienes {{ tokens }} tokens.</p>
+    <a href="/logout">Cerrar sesión</a>
 </body>
 </html>
