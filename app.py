@@ -1,69 +1,54 @@
-from web3 import Web3, HTTPProvider
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template
+import sqlite3
+import threading
 
-# Configurar la conexión a la red Goerli
-w3 = Web3(HTTPProvider('https://goerli.infura.io/v3/a4693816802c4b01bedef15ad5a2fd92'))
-
-# Dirección de la cuenta desde la que se enviarán los fondos
-faucet_address = "0xdbD9cFe329Fcb90529579Fe25282089464616CD0"
-
-# Contraseña de la cuenta desde la que se enviarán los fondos (si se requiere)
-faucet_password = "Mgnieto26-"
-
-# Crear la aplicación Flask
 app = Flask(__name__)
+contador = 86400  # 24 horas en segundos
+contador_activo = False  # Indica si la cuenta regresiva está activa
+lock = threading.Lock()  # Bloqueo para asegurar operaciones atómicas
+
+def decrementar_contador():
+    global contador, contador_activo
+
+    while contador > 0:
+        with lock:
+            if not contador_activo:
+                break
+
+            contador -= 1
+
+        # Esperar 1 segundo
+        threading.Event().wait(1)
+
+    contador_activo = False
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    # Conectar a la base de datos
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
 
-@app.route('/sponsorship')
-def sponsorship():
-    return render_template('sponsorship.html')
+    # Obtener el valor actual del contador
+    cursor.execute('SELECT valor FROM contador WHERE id = 1')
+    contador = cursor.fetchone()[0]
 
-@app.route('/about')
-def about():
-    return render_template('about.html')
-    
-# Ruta para solicitar fondos
-@app.route('/request', methods=['POST'])
-def request_funds():
-    # Obtener la dirección de la cuenta a la que se enviarán los fondos desde los datos de solicitud
-    data = request.get_json()
-    recipient_address = data.get('address')
+    # Cerrar la conexión
+    conn.close()
 
-    # Verificar si la dirección de destino es válida
-    if not w3.isAddress(recipient_address):
-        return "Dirección inválida", 400
+    # Renderizar el template con el contador
+    return render_template('index.html', contador=contador)
 
-    # Verificar si la dirección de destino ya ha recibido fondos en los últimos 24 horas
-    last_received_block = w3.eth.getBlockNumber() - 5760  # 5760 bloques ~ 24 horas en Goerli
-    transactions = w3.eth.getTransactionsByAddress(faucet_address, last_received_block)
-    for tx in transactions:
-        if tx.get('to') == recipient_address:
-            return "Dirección ya recibió fondos recientemente", 400
+@app.route('/decrementar')
+def decrementar():
+    global contador, contador_activo
 
-    # Enviar fondos a la dirección de destino
-    try:
-        transaction = {
-            'from': faucet_address,
-            'to': recipient_address,
-            'value': w3.toWei(0.01, 'ether'),  # Monto de envío (0.1 ETH en este ejemplo)
-            'gas': 21000,  # Estimación básica de gas para una transferencia
-            'gasPrice': w3.toWei('5', 'gwei'),  # Precio del gas (5 gwei en este ejemplo)
-        }
+    # Iniciar la cuenta regresiva si no está activa
+    if not contador_activo:
+        contador_activo = True
+        threading.Thread(target=decrementar_contador).start()
 
-        # Desbloquear la cuenta del faucet (si se requiere)
-        if faucet_password:
-            w3.personal.unlockAccount(faucet_address, faucet_password)
-
-        # Firmar y enviar la transacción
-        signed_txn = w3.eth.account.signTransaction(transaction, private_key="a4693816802c4b01bedef15ad5a2fd92")
-        tx_hash = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
-
-        return f"Transacción enviada: {tx_hash.hex()}", 200
-    except Exception as e:
-        return f"Error al enviar la transacción: {str(e)}", 500
+    # Renderizar el template con el contador actualizado
+    return render_template('index.html', contador=contador)
 
 if __name__ == '__main__':
     app.run()
